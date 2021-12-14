@@ -1,5 +1,7 @@
 import edu.duke.*;
 import java.util.*;
+import java.nio.file.*;
+import java.io.*;
 import org.apache.commons.csv.*;
 import java.util.Map.Entry;
 
@@ -7,6 +9,21 @@ public class FirstRatings {
 
     public ArrayList<Movie> loadMovies(String filename) {
         ArrayList<Movie> myMovies = new ArrayList<Movie>();
+        //Path p = Paths.get("D:/Java/MarkovModel/data/confucius.txt");
+//        StringBuilder contentBuilder = new StringBuilder();
+//
+//        try(BufferedReader br = Files.newBufferedReader(p)) {
+//            String sCurrentLine;
+//            while ((sCurrentLine = br.readLine()) != null) {
+//                contentBuilder.append(sCurrentLine).append("\n");
+//            }
+//
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
         FileResource fr = new FileResource(filename);
         CSVParser parser = fr.getCSVParser();
         for (CSVRecord record : parser) {

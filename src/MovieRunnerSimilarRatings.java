@@ -1,7 +1,12 @@
 import java.util.*;
 
 public class MovieRunnerSimilarRatings {
-    public void printAverageRatings(){
+
+    public static void main(String[] args) {
+        printAverageRatings();
+    }
+
+    public static void printAverageRatings(){
         FourthRatings moviesRated = new FourthRatings("ratings.csv");
         MovieDatabase.initialize("ratedmoviesfull.csv");
         ArrayList<Rating> ratingList = moviesRated.getAverageRatings(35);
