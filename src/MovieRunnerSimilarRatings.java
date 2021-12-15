@@ -5,6 +5,11 @@ import java.util.*;
 
 public class MovieRunnerSimilarRatings {
 
+    public static void main(String[] args) {
+        FirstRatings fr = new FirstRatings();
+        fr.testLoadMovies();
+    }
+
     public static void printAverageRatings(){
         FourthRatings moviesRated = new FourthRatings("ratings.csv");
         MovieDatabase.initialize("ratedmoviesfull.csv");

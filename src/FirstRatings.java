@@ -12,8 +12,8 @@ public class FirstRatings {
 
         try {
 
-            String file = "D:/Java/MovieRecommender/data/ratedmovies_short.csv";//file path
-            FileReader fr = new FileReader(file);
+            //String file = "D:/Java/MovieRecommender/data/ratedmovies_short.csv";//file path
+            FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
             br.readLine();
             String line;
@@ -82,8 +82,8 @@ public class FirstRatings {
         ArrayList<EfficientRater> raters = new ArrayList<EfficientRater>();
         try {
 
-            String file = "D:/Java/MovieRecommender/data/ratings.csv";//file path
-            FileReader fr = new FileReader(file);
+            //String file = "D:/Java/MovieRecommender/data/ratings.csv";//file path
+            FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
             br.readLine();
             String line;
@@ -210,8 +210,6 @@ public class FirstRatings {
         }
 
 
-        //TODO: last 3 bullet points of assignment
-
         // Add code to find the maximum number of ratings by any rater
         int maxRatings = 0;
         for (String key : raterRatings.keySet()) {
@@ -223,8 +221,6 @@ public class FirstRatings {
 
         System.out.println("Max number of ratings: " + maxRatings);
         ArrayList<String> maxRaters = new ArrayList<String>();
-        // raterRatings is a hashmap, we need to get key by value now to know which rater has max number of ratings.
-        // We will put all raters with maxRatings in a new arraylist
 
         for (Map.Entry<String, Integer> entry : raterRatings.entrySet()) {
             if (Objects.equals(entry.getValue(), maxRatings)) {
@@ -233,8 +229,6 @@ public class FirstRatings {
         }
         System.out.println("Max raters are: " + maxRaters);
 
-        //Add code to find the number of ratings a particular movie has. Can we use the getItemsRated() method?
-        // create a hashmap of movies and number of times it was rated.
         HashMap<ArrayList<String>, Integer> numMovieRatings = new HashMap<ArrayList<String>, Integer>();
         for (EfficientRater r : theRaters) {
             if (!numMovieRatings.containsKey(r.getItemsRated())) {
@@ -249,8 +243,6 @@ public class FirstRatings {
         // Use it to see ho many movies were rated:
         System.out.println("Total number of movies rated: " + numMovieRatings.size());
 
-        // Get number of ratings for a specific movie:
-        //ArrayList<String> moviesToLook =
 
         String movieToLookUp = "1798709";
         for (ArrayList<String> s : numMovieRatings.keySet()) {
