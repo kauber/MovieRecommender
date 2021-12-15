@@ -1,65 +1,45 @@
-import edu.duke.*;
+//import edu.duke.*;
 import java.util.*;
 import java.nio.file.*;
 import java.io.*;
-import org.apache.commons.csv.*;
+//import org.apache.commons.csv.*;
 import java.util.Map.Entry;
 
 public class FirstRatings {
 
     public ArrayList<Movie> loadMovies(String filename) {
-        ArrayList<Movie> myMovies = new ArrayList<Movie>();
-        //Path p = Paths.get("D:/Java/MarkovModel/data/confucius.txt");
-//        StringBuilder contentBuilder = new StringBuilder();
-//
-//        try(BufferedReader br = Files.newBufferedReader(p)) {
-//            String sCurrentLine;
-//            while ((sCurrentLine = br.readLine()) != null) {
-//                contentBuilder.append(sCurrentLine).append("\n");
-//            }
-//
-//        }
-//        catch (IOException e) {
+        ArrayList<Movie> myMovies = new ArrayList<>();
+
+        try {
+
+            String file = "D:/Java/MovieRecommender/data/ratedmovies_short.csv";//file path
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+                //List<String> lineData = Arrays.asList(line.split(","));
+                String[] columns = line.split(",");
+                String id = columns[0];
+                String title = columns[1];
+                String year = columns[2];
+                String genre = columns[3];
+                String director = columns[4];
+                String country = columns[5];
+                String poster = columns[6];
+                int minutes = Integer.parseInt(columns[7]);
+                Movie myMovie = new Movie(id, title, year, genre, director, country, poster, minutes);
+                myMovies.add(myMovie);
+            }
+        } catch (IOException e) {
+            System.out.println("File not Found");
 //            e.printStackTrace();
-//        }
 
 
-        FileResource fr = new FileResource(filename);
-        CSVParser parser = fr.getCSVParser();
-        for (CSVRecord record : parser) {
-            String id = record.get("id");
-            String title = record.get("title");
-            String year = record.get("year");
-            String genres = record.get("genre");
-            String director = record.get("director");
-            String country = record.get("country");
-            String poster = record.get("poster");
-            int minutes = Integer.parseInt(record.get("minutes"));
-            Movie myMovie = new Movie(id, title, year, genres, director, country, poster, minutes);
-            myMovies.add(myMovie);
         }
         return myMovies;
     }
 
-    public ArrayList<EfficientRater> loadRatersOld(String filename) {
-        // this method returns a non aggregated version of the arraylist<Rater>
-        ArrayList<EfficientRater> raterArray = new ArrayList<EfficientRater>();
-        FileResource fr = new FileResource(filename);
-        CSVParser parser = fr.getCSVParser();
-        for (CSVRecord record : parser) {
-            String raterId = record.get("rater_id");
-            String movieId = record.get("movie_id");
-            double rating = Double.parseDouble(record.get("rating"));
-            System.out.println(rating);
-            EfficientRater myRater = new EfficientRater(raterId);
-            myRater.addRating(movieId, rating);
-            //System.out.println(myRater.getRating(movieId));
-            raterArray.add(myRater);
-            //raterArray.add(myRater);
-            //System.out.println(raterId);
-        }
-        return raterArray;
-    }
 
     //helper method to determine whether the arraylist Rater already contains a rater
     public boolean isinRaters(EfficientRater rater, ArrayList<EfficientRater> raters) {
@@ -71,32 +51,75 @@ public class FirstRatings {
         return false;
     }
 
+//    public ArrayList<EfficientRater> loadRatersOld(String filename) {
+//        ArrayList<EfficientRater> raters = new ArrayList<EfficientRater>();
+//        //HashMap<String,Rating> raters= new HashMap<String,Rating>();
+//        FileResource fr = new FileResource(filename);
+//        CSVParser parser = fr.getCSVParser();
+//        for (CSVRecord record : parser) {
+//            String raterId = record.get("rater_id");
+//            String movieId = record.get("movie_id");
+//            double rating = Double.parseDouble(record.get("rating"));
+//
+//            EfficientRater er = new EfficientRater(raterId); // using helper method isinRaters to determine whether a rater is already
+//            // in the raters arraylist
+//            if (!isinRaters(er, raters)) {
+//                er.addRating(movieId, rating);
+//                raters.add(er);
+//            } else {
+//                for (EfficientRater r : raters) {
+//                    if (r.getID().equals(raterId)) {
+//                        r.addRating(movieId, rating);
+//                    }
+//                }
+//            }
+//        }
+//        //System.out.println("raters size: " + raters.size());
+//        return raters;
+//    }
+
     public ArrayList<EfficientRater> loadRaters(String filename) {
         ArrayList<EfficientRater> raters = new ArrayList<EfficientRater>();
-        //HashMap<String,Rating> raters= new HashMap<String,Rating>();
-        FileResource fr = new FileResource(filename);
-        CSVParser parser = fr.getCSVParser();
-        for (CSVRecord record : parser) {
-            String raterId = record.get("rater_id");
-            String movieId = record.get("movie_id");
-            double rating = Double.parseDouble(record.get("rating"));
+        try {
 
-            EfficientRater er = new EfficientRater(raterId); // using helper method isinRaters to determine whether a rater is already
-            // in the raters arraylist
-            if (!isinRaters(er, raters)) {
-                er.addRating(movieId, rating);
-                raters.add(er);
-            } else {
-                for (EfficientRater r : raters) {
-                    if (r.getID().equals(raterId)) {
-                        r.addRating(movieId, rating);
+            String file = "D:/Java/MovieRecommender/data/ratings.csv";//file path
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+
+                String[] columns = line.split(",");
+                String raterId = columns[0];
+                String movieId = columns[1];
+                double rating = Double.parseDouble(columns[2]);
+
+                EfficientRater er = new EfficientRater(raterId); // using helper method isinRaters to determine whether a rater is already
+                // in the raters arraylist
+                if (!isinRaters(er, raters)) {
+                    er.addRating(movieId, rating);
+                    raters.add(er);
+                } else {
+                    for (EfficientRater r : raters) {
+                        if (r.getID().equals(raterId)) {
+                            r.addRating(movieId, rating);
+                        }
                     }
                 }
             }
+
+            //System.out.println("raters size: " + raters.size());
+
+        } catch (IOException e) {
+            System.out.println("File not Found");
+//            e.printStackTrace(); }
+
+
         }
-        //System.out.println("raters size: " + raters.size());
         return raters;
     }
+
+
 
     public void testLoadMovies() {
         ArrayList<Movie> theMovies = loadMovies("D:/Java_Projects/StepOneStarterProgram/data/ratedmoviesfull.csv");
@@ -152,7 +175,7 @@ public class FirstRatings {
     }
 
     public void testLoadRaters() {
-        ArrayList<EfficientRater> theRaters = loadRatersOld("D:/Java_Projects/StepOneStarterProgram/data/ratings_short.csv");
+        ArrayList<EfficientRater> theRaters = loadRaters("D:/Java_Projects/StepOneStarterProgram/data/ratings_short.csv");
         // Print the total number of raters
 
         ArrayList<String> raters = new ArrayList<String>();
@@ -186,35 +209,6 @@ public class FirstRatings {
             }
         }
 
-        // ITERATE through hashmap and print key, value plus movie and rating
-        /*for (String key : raterRatings.keySet()) {
-            System.out.println("Rater: " + key + " " + "Ratings: " + raterRatings.get(key));
-            for (Rater rater : theRaters) {
-            if (rater.getID().equals(key)) {
-                ArrayList<String> ratings = rater.getItemsRated();
-                for (String rating : ratings) {
-                    System.out.print("movie_id: " + rating + " ");
-                    System.out.println("Rating: " + rater.getRating(rating));
-                }
-            }
-        }
-        } */
-
-
-        // look up specific rater and get all their data
-
-        /*for (Rater rater : theRaters) {
-            if (rater.getID().equals("2")) {
-                System.out.println("Rater " + rater.getID() + " Ratings: " + rater.numRatings());
-                ArrayList<String> ratings = rater.getItemsRated();
-                for (String rating : ratings) {
-                    System.out.print("movie_id: " + rating + " ");
-                    System.out.println("Rating: " + rater.getRating(rating));
-                }
-            }
-        }
-
-        } */
 
         //TODO: last 3 bullet points of assignment
 
@@ -265,21 +259,23 @@ public class FirstRatings {
             }
         }
 
-        // test getRating method
-        //for (Rater rater : theRaters) {
-        //System.out.println("Ratings for 1798709: " + rater.getRating(movieToLookUp));
-        //}
-    }
+        //test getRating method
+        for (Rater rater : theRaters) {
+            System.out.println("Ratings for 1798709: " + rater.getRating(movieToLookUp));
+        }
 
-    public void testMyLoadRaters() {
-        ArrayList<EfficientRater> theRaters = loadRaters("D:/Java_Projects/StepOneStarterProgram/data/ratings_short.csv");
-        for (EfficientRater r : theRaters) {
-            System.out.println(r.getID());
-            System.out.println(r.getItemsRated());
-            ArrayList<String> movies = r.getItemsRated();
-            for (String movie : movies) {
-                System.out.println(r.getRating(movie));
+    }
+        public void testMyLoadRaters () {
+            ArrayList<EfficientRater> theRaters = loadRaters("D:/Java_Projects/StepOneStarterProgram/data/ratings_short.csv");
+            for (EfficientRater r : theRaters) {
+                System.out.println(r.getID());
+                System.out.println(r.getItemsRated());
+                ArrayList<String> movies = r.getItemsRated();
+                for (String movie : movies) {
+                    System.out.println(r.getRating(movie));
+                }
             }
         }
     }
-}
+
+

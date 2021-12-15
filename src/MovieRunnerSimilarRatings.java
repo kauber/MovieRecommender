@@ -1,10 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class MovieRunnerSimilarRatings {
-
-    public static void main(String[] args) {
-        printAverageRatings();
-    }
 
     public static void printAverageRatings(){
         FourthRatings moviesRated = new FourthRatings("ratings.csv");
