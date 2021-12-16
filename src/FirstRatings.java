@@ -23,9 +23,9 @@ public class FirstRatings {
                 String id = columns[0];
                 String title = columns[1];
                 String year = columns[2];
-                String genre = columns[3];
-                String director = columns[4];
-                String country = columns[5];
+                String country = columns[3];
+                String genre = columns[4];
+                String director = columns[5];
                 int minutes = Integer.parseInt(columns[6]);
                 String poster = columns[7];
                 Movie myMovie = new Movie(id, title, year, genre, director, country, poster, minutes);
@@ -156,7 +156,7 @@ public class FirstRatings {
                 directors.put(theMovies.get(k).getDirector(), currentCount);
             }
         }
-        System.out.println(directors);
+        //System.out.println(directors);
 
         int maxMoviesDirected = 0;
         for (String key : directors.keySet()) {
