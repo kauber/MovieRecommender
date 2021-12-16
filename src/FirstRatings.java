@@ -19,15 +19,15 @@ public class FirstRatings {
             String line;
             while ((line = br.readLine()) != null) {
                 //List<String> lineData = Arrays.asList(line.split(","));
-                String[] columns = line.split(",");
+                String[] columns = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 String id = columns[0];
                 String title = columns[1];
                 String year = columns[2];
                 String genre = columns[3];
                 String director = columns[4];
                 String country = columns[5];
-                String poster = columns[6];
-                int minutes = Integer.parseInt(columns[7]);
+                int minutes = Integer.parseInt(columns[6]);
+                String poster = columns[7];
                 Movie myMovie = new Movie(id, title, year, genre, director, country, poster, minutes);
                 myMovies.add(myMovie);
             }
@@ -122,7 +122,7 @@ public class FirstRatings {
 
 
     public void testLoadMovies() {
-        ArrayList<Movie> theMovies = loadMovies("D:/Java_Projects/StepOneStarterProgram/data/ratedmoviesfull.csv");
+        ArrayList<Movie> theMovies = loadMovies("D:/Java/MovieRecommender/data/ratedmovies_short.csv");
         System.out.println("Number of movies in the file: " + theMovies.size());
         /*for (Movie myMovie: theMovies){
             System.out.println(myMovie);

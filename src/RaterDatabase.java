@@ -1,4 +1,7 @@
 //import edu.duke.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 //import org.apache.commons.csv.*;
 
@@ -21,14 +24,35 @@ public class RaterDatabase {
 
     public static void addRatings(String filename) {
         initialize();
-        FileResource fr = new FileResource(filename);
-        CSVParser csvp = fr.getCSVParser();
-        for(CSVRecord rec : csvp) {
-            String id = rec.get("rater_id");
-            String item = rec.get("movie_id");
-            String rating = rec.get("rating");
-            addRaterRating(id,item,Double.parseDouble(rating));
+
+        try {
+            FileReader fr = new FileReader(filename);
+            BufferedReader br = new BufferedReader(fr);
+            br.readLine();
+            String line;
+            while ((line = br.readLine()) != null) {
+                //List<String> lineData = Arrays.asList(line.split(","));
+                String[] columns = line.split(",");
+                String id = columns[0];
+                String item = columns[1];
+                String rating = columns[2];
+                addRaterRating(id,item,Double.parseDouble(rating));
+            }
+        } catch (IOException e) {
+            System.out.println("File not Found");
+//            e.printStackTrace();
+
+
         }
+
+//        FileResource fr = new FileResource(filename);
+//        CSVParser csvp = fr.getCSVParser();
+//        for(CSVRecord rec : csvp) {
+//            String id = rec.get("rater_id");
+//            String item = rec.get("movie_id");
+//            String rating = rec.get("rating");
+//            addRaterRating(id,item,Double.parseDouble(rating));
+//        }
     }
 
     public static void addRaterRating(String raterID, String movieID, double rating) {
