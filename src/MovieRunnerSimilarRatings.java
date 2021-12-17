@@ -1,13 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class MovieRunnerSimilarRatings {
 
     public static void main(String[] args) {
-        FirstRatings fr = new FirstRatings();
-        fr.testLoadMovies();
+        printSimilarRatings();
     }
 
     public static void printAverageRatings(){
@@ -44,14 +44,14 @@ public class MovieRunnerSimilarRatings {
 
     }
 
-    public void printSimilarRatings(){
+    public static void printSimilarRatings(){
         FourthRatings fr = new FourthRatings("ratings.csv");
-        ArrayList<Rating> list = fr.getSimilarRatings("337",10,3);
+        ArrayList<Rating> list = fr.getSimilarRatings("88",10,3);
         System.out.println("Found " + list.size() + " ratings");
 
         for (int i = 0; i < 3; i++) {
-            //double val = list.get(i).getValue();
-            System.out.println(list.get(i).getValue() + " " +  " " + MovieDatabase.getTitle(list.get(i).getItem()));
+            double myValue = list.get(i).getValue();
+            System.out.println(String.format("%.2f",myValue) + " " +  " " + MovieDatabase.getTitle(list.get(i).getItem()));
 
         }
     }

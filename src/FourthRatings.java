@@ -17,8 +17,6 @@ public class FourthRatings {
         double rating = 0.0;
         int raterCount = 0;
         for (Rater rater: RaterDatabase.getRaters()){
-            //System.out.println(r.getID());
-            //System.out.println(r.getItemsRated());
             ArrayList<String> movies = rater.getItemsRated();
             for (String movie: movies){
                 if (movie.equals(id)){

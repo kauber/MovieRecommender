@@ -122,7 +122,7 @@ public class FirstRatings {
 
 
     public void testLoadMovies() {
-        ArrayList<Movie> theMovies = loadMovies("D:/Java/MovieRecommender/data/ratedmovies_short.csv");
+        ArrayList<Movie> theMovies = loadMovies("D:/Java/MovieRecommender/data/ratedmoviesfull.csv");
         System.out.println("Number of movies in the file: " + theMovies.size());
         /*for (Movie myMovie: theMovies){
             System.out.println(myMovie);
