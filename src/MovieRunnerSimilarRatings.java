@@ -8,6 +8,7 @@ public class MovieRunnerSimilarRatings {
 
     public static void main(String[] args) {
         printSimilarRatings();
+        printSimilarRatingsByGenre();
     }
 
     public static void printAverageRatings(){
@@ -21,7 +22,7 @@ public class MovieRunnerSimilarRatings {
         }
     }
 
-    public void printAverageRatingsbyYearAfterAndGenre(){
+    public static void printAverageRatingsbyYearAfterAndGenre(){
         FourthRatings ratedMovies = new FourthRatings("data/ratings.csv");
         MovieDatabase.initialize("ratedmoviesfull.csv");
 
@@ -49,20 +50,19 @@ public class MovieRunnerSimilarRatings {
         ArrayList<Rating> list = fr.getSimilarRatings("88",10,3);
         System.out.println("Found " + list.size() + " ratings");
 
-        for (int i = 0; i < 3; i++) {
-            double myValue = list.get(i).getValue();
-            System.out.println(String.format("%.2f",myValue) + " " +  " " + MovieDatabase.getTitle(list.get(i).getItem()));
+        for (int i = 0; i < 10; i++) {
+            System.out.println(String.format("%.2f",list.get(i).getValue()) + " " +  " " + MovieDatabase.getTitle(list.get(i).getItem()));
 
         }
     }
 
-    public void printSimilarRatingsByGenre() {
+    public static void printSimilarRatingsByGenre() {
         FourthRatings fr = new FourthRatings();
         GenreFilter gf = new GenreFilter("Mystery");
-        ArrayList<Rating> list = fr.getSimilarRatingsByFilter("964", 20, 5, gf);
+        ArrayList<Rating> list = fr.getSimilarRatingsByFilter("88", 20, 5, gf);
         System.out.println("Found " + list.size() + " ratings");
-        for (int i = 0; i < 3; i++) {
-            System.out.println(list.get(i).getValue() + " " +  " " +
+        for (int i = 0; i < 5; i++) {
+            System.out.println(String.format("%.2f",list.get(i).getValue()) + " " +  " " +
                     MovieDatabase.getTitle(list.get(i).getItem()) + " " +
                     MovieDatabase.getGenres(list.get(i).getItem()));
         }
@@ -82,7 +82,7 @@ public class MovieRunnerSimilarRatings {
     }
 
 
-    public void printSimilarRatingsByGenreAndMinutes(){
+    public static void printSimilarRatingsByGenreAndMinutes(){
         FourthRatings fr = new FourthRatings();
         AllFilters af = new AllFilters();
         af.addFilter(new GenreFilter("Drama"));
@@ -90,14 +90,14 @@ public class MovieRunnerSimilarRatings {
         ArrayList<Rating> list = fr.getSimilarRatingsByFilter("168", 10, 3, af);
         System.out.println("Found " + list.size() + " ratings");
         for (int i = 0; i < 3; i++) {
-            System.out.println(list.get(i).getValue() + " " +  " " +
+            System.out.println(String.format("%.2f",list.get(i).getValue()) + " " +  " " +
                     MovieDatabase.getTitle(list.get(i).getItem()) + " " +
                     MovieDatabase.getMinutes(list.get(i).getItem()) + " " +
                     MovieDatabase.getGenres(list.get(i).getItem()));
         }
     }
 
-    public void printSimilarRatingsByYearAfterAndMinutes(){
+    public static void printSimilarRatingsByYearAfterAndMinutes(){
         FourthRatings fr = new FourthRatings();
         AllFilters af = new AllFilters();
         af.addFilter(new YearAfterFilter(1975));
@@ -105,7 +105,7 @@ public class MovieRunnerSimilarRatings {
         ArrayList<Rating> list = fr.getSimilarRatingsByFilter("314", 10, 5, af);
         System.out.println("Found " + list.size() + " ratings");
         for (int i = 0; i < 3; i++) {
-            System.out.println(list.get(i).getValue() + " " +  " " +
+            System.out.println(String.format("%.2f",list.get(i).getValue()) + " " +  " " +
                     MovieDatabase.getTitle(list.get(i).getItem()) + " " +
                     MovieDatabase.getYear(list.get(i).getItem()) + " " +
                     MovieDatabase.getMinutes(list.get(i).getItem()));
